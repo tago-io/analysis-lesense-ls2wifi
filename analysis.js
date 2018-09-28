@@ -1,9 +1,11 @@
-/*
- * Analysis to get data from Lesense
- *
- * Learn how to use it
- * Tutorial: https://tago.elevio.help/en/articles/136
- */
+ /*
+  * Analysis to get data from the Lesense API
+  *
+  * Learn how to use it
+  * Tutorial: https://tago.elevio.help/en/articles/136
+  */
+
+
 const TagoAnalysis = require('tago/analysis');
 const TagoDevice = require('tago/device');
 const TagoUtils = require('tago/utils');
@@ -48,9 +50,9 @@ async function parse(context) {
   if (!environment.lesense_token) return context.log('Missing lesense_token environment var');
 
   const tagodev = new TagoDevice(environment.device_token);
-  // Find last import from lesense
+  // Find the last import from lesense
   const last_collected = await tagodev.find({ variable: 'last_send', query: 'last_value' }).then(r => r[0]);
-  // Check if tago has already searched for data in lesense ever.
+  // Check if TagoIO has already searched for data in lesense ever.
   // If TagoIO analysis already searched, the search is done from the last record to not duplicate the data.
   const getdata = last_collected ? await getData(environment.lesense_token, last_collected.value) : await getData(environment.lesense_token);
   const tagodata = [];
